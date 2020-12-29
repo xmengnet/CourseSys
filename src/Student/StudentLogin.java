@@ -5,7 +5,7 @@ import db.*;
 import java.sql.*;
 import java.sql.Statement;
 import java.util.Scanner;
-
+//渣渣鹏是sb
 public class StudentLogin {
     private static DbCon dbCon = new DbCon();
     public static void main(String[] args) throws Exception {
