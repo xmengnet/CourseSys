@@ -1,4 +1,4 @@
-package Student;
+package Manager;
 
 import db.*;
 
@@ -6,14 +6,15 @@ import java.sql.*;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class StudentLogin {
+public class adminLogin {
     private static DbCon dbCon = new DbCon();
+
     public static void main(String[] args) throws Exception {
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("请输入账号：");
-        String count=scanner.next();
+        String count = scanner.next();
         System.out.println("请输入密码：");
-        String passwd=scanner.next();
+        String passwd = scanner.next();
 //        查询帐号信息
         String query = "select admin from manager where admin =" + count;
 
