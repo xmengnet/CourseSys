@@ -12,6 +12,8 @@ public class adminLogin extends JFrame {
     //标签
     private JLabel lable1;
     private JLabel lable2;
+    private JLabel lable3;
+    private JLabel lable4;
     //文本框
     private JTextField text1;
     private JPasswordField text2;
@@ -34,7 +36,7 @@ public class adminLogin extends JFrame {
         this.setTitle("管理员登录界面");
         this.setLayout(null);
         this.setLocation(700, 300);
-        InitGlobalFont(new Font("alias", Font.PLAIN, 12));  //统一设置字体
+        InitGlobalFont(new Font("alias", Font.PLAIN, 14));  //统一设置字体
     }
 
     private static void InitGlobalFont(Font font) {
@@ -49,14 +51,32 @@ public class adminLogin extends JFrame {
     }
 
     private void addComponent() {
-        lable1 = new JLabel("用户名");
-        lable1.setSize(100, 70);
-        lable1.setLocation(100, 80);
+        int width = 25, height = 25;//两个图片的实际大小
+        lable1 = new JLabel();
+        ImageIcon icon1 = new ImageIcon("src/Images/账户.jpg");//导入图片路径
+        lable1.setIcon(icon1);
+        icon1.setImage(icon1.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT));//创建此图像的缩放版本
+        lable1.setSize(25, 25);//图片容器大小
+        lable1.setLocation(60, 102);//图片位置
         this.add(lable1);
-        lable2 = new JLabel("密    码");
-        lable2.setSize(100, 70);
-        lable2.setLocation(100, 130);
+
+        lable2 = new JLabel();
+        ImageIcon icon2 = new ImageIcon("src/Images/密码.jpg");
+        lable2.setIcon(icon2);
+        icon2.setImage(icon2.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT));//创建此图像的缩放版本
+        lable2.setSize(25, 25);//图片容器大小
+        lable2.setLocation(60, 151);
         this.add(lable2);
+
+        lable3 = new JLabel("账    户：");
+        lable3.setSize(60, 60);
+        lable3.setLocation(100, 83);
+        this.add(lable3);
+
+        lable4 = new JLabel("密    码：");
+        lable4.setSize(60, 60);
+        lable4.setLocation(100, 133);
+        this.add(lable4);
 
         text1 = new JTextField();
         text1.setSize(150, 30);
@@ -66,6 +86,10 @@ public class adminLogin extends JFrame {
         text2.setSize(150, 30);
         text2.setLocation(160, 150);
         this.add(text2);
+
+        this.setLayout(new FlowLayout());// 添加背景色
+        this.getContentPane().setBackground(Color.white);// 核心，设置背景颜色，用这种方法。getContentPane()
+
 
         bt1 = new JButton("登录");
         bt1.setSize(70, 30);
