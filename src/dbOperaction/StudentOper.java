@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import db.*;
 import ArrayListData.*;
 
-public class InsertClasses {
+public class StudentOper {
     public void addClasses(CourseResult courseResult) throws Exception{
         // 首先拿到数据库的连接
         DbCon dbCon=new DbCon();
@@ -67,7 +67,7 @@ public class InsertClasses {
     }
 
     public static void main(String[] args) throws Exception {
-        InsertClasses in=new InsertClasses();
+        StudentOper in=new StudentOper();
         CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
         //in.addClasses(co);
 //        in.delClasses(co);
