@@ -11,6 +11,34 @@ import db.*;
 import ArrayListData.*;
 
 public class StudentOper {
+    public Courses display() throws Exception {
+        ArrayList<Courses> list=new ArrayList<Courses>();
+        DbCon dbCon=new DbCon();
+        Statement statement=dbCon.getCon().createStatement();
+        String query;
+        query="select * from courses";
+        ResultSet resultSet=statement.executeQuery(query);
+
+        System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
+        while(resultSet.next()){
+            Courses courses=new Courses();
+            courses.setCourseid(resultSet.getInt(1));
+            courses.setCname(resultSet.getString(2));
+            courses.setLimitnum(resultSet.getInt(3));
+            courses.setSurplus(resultSet.getInt(4));
+            courses.setCteacher(resultSet.getString(5));
+            courses.setTeachtime(resultSet.getInt(6));
+            list.add(courses);
+        }
+
+        for(Courses i:list)
+        {
+            System.out.println(i.getCourseid()+" "+i.getCname()+" "+i.getLimitnum()+" "+
+                    i.getSurplus()+" "+i.getCteacher()+" "+i.getTeachtime());
+        }
+        return null;
+    }
+    /*选择课程*/
     public void addClasses(CourseResult courseResult) throws Exception {
         // 首先拿到数据库的连接
         DbCon dbCon = new DbCon();
@@ -90,7 +118,8 @@ public class StudentOper {
         //CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
         //in.addClasses(co);
 //        in.delClasses(co);
-        System.out.println(in.changeClasses(1810361232));
+        //System.out.println(in.changeClasses(1810361232));
+        System.out.println(in.display());
     }
 
 }
