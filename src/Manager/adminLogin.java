@@ -19,8 +19,11 @@ public class adminLogin extends JFrame {
 
     //构造函数
     public adminLogin() {
+//        设置窗口不可变，并设置居中
         this.init();
         this.addComponent();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     public void init() {
