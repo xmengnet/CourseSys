@@ -14,8 +14,9 @@ public class AdminMenu  extends JFrame implements ActionListener {
     JPanel panel;
     JPanel panel2;
     JLabel label;
-    public static String name;
-    AdminMenu(){
+    public static String username;
+    AdminMenu(String name){
+        username=name;
         this.setSize(900, 700);
         this.setTitle("学生课程管理系统-管理员端");
         this.setLayout(null);
@@ -124,4 +125,7 @@ public class AdminMenu  extends JFrame implements ActionListener {
         }
     }
 
+    public static void main(String[] args) {
+        new AdminMenu("admin");
+    }
 }
