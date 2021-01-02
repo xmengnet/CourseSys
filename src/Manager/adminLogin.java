@@ -3,8 +3,10 @@ package Manager;
 import db.*;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.sql.*;
+import java.util.Enumeration;
 
 public class adminLogin extends JFrame {
     //标签
@@ -32,6 +34,18 @@ public class adminLogin extends JFrame {
         this.setTitle("管理员登录界面");
         this.setLayout(null);
         this.setLocation(700, 300);
+        InitGlobalFont(new Font("alias", Font.PLAIN, 12));  //统一设置字体
+    }
+
+    private static void InitGlobalFont(Font font) {
+        FontUIResource fontRes = new FontUIResource(font);
+        for (Enumeration<Object> keys = UIManager.getDefaults().keys(); keys.hasMoreElements();) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof FontUIResource) {
+                UIManager.put(key, fontRes);
+            }
+        }
     }
 
     private void addComponent() {
