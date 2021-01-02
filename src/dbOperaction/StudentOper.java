@@ -50,7 +50,6 @@ public class StudentOper {
                 + "values(" + "?,?,?,?)";
          /* 参数用?表示，相当于占位符，然后在对参数进行赋值。当真正执行时，
           这些参数会加载在SQL语句中，把SQL语句拼接完整才去执行。这样就会减少对数据库的操作*/
-//        String query=null;
         /*  prepareStatement这个方法会将SQL语句加载到驱动程序con集成程序中，
          但是并不直接执行,而是当它调用execute()方法的时候才真正执行；*/
         PreparedStatement psmt = con.prepareStatement(query);
@@ -91,8 +90,8 @@ public class StudentOper {
         DbCon dbCon = new DbCon();
         Statement statement = dbCon.getCon().createStatement();
         String query = null;
-        Scanner sc = new Scanner(System.in);
-        sno = sc.nextInt();
+//        Scanner sc = new Scanner(System.in);
+//        sno = sc.nextInt();
         query = "select * from courseresult where sno ='" + sno + "' ";
         // 执行SQL语句
         ResultSet resultSet = statement.executeQuery(query);
@@ -113,6 +112,23 @@ public class StudentOper {
         return null;
     }
 
+    /*根据课程号查询课程名*/
+    public  String GetCnameBycourseid(int courseid) throws Exception{
+        String cname=null;
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        Courses courses=new Courses();
+        String query;
+         query =
+                "select * from courses where courseid = 'courseid'";
+        /*执行查询语句*/
+        Statement statement=dbCon.getCon().createStatement();
+        ResultSet resultSet=statement.executeQuery(query);
+        while(resultSet.next()){
+            cname=resultSet.getString(2);
+        }
+        return cname;
+    }
 
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();
@@ -120,7 +136,7 @@ public class StudentOper {
         //in.addClasses(co);
 //        in.delClasses(co);
         //System.out.println(in.changeClasses(1810361232));
-        System.out.println(in.display());
+        System.out.println(in.GetCnameBycourseid(10002));
     }
 
 }
