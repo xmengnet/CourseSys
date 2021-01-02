@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 import db.*;
 import ArrayListData.*;
 
 public class StudentOper {
     /*查看所有可选的课程*/
-    public Courses display() throws Exception {
+    public Vector display() throws Exception {
         ArrayList<Courses> list=new ArrayList<Courses>();
         // 首先拿到数据库的连接
         DbCon dbCon=new DbCon();
@@ -23,24 +24,21 @@ public class StudentOper {
         ResultSet resultSet=statement.executeQuery(query);
 
         System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
+        Vector rowData = new Vector();
         while(resultSet.next()){
-            Courses courses=new Courses();
-            courses.setCourseid(resultSet.getInt(1));
-            courses.setCname(resultSet.getString(2));
-            courses.setLimitnum(resultSet.getInt(3));
-            courses.setSurplus(resultSet.getInt(4));
-            courses.setCteacher(resultSet.getString(5));
-            courses.setTeachtime(resultSet.getInt(6));
-            list.add(courses);
-        }
+            Vector hang = new Vector();
 
-        for(Courses i:list)
-        {
-            System.out.println(i.getCourseid()+" "+i.getCname()+" "+i.getLimitnum()+" "+
-                    i.getSurplus()+" "+i.getCteacher()+" "+i.getTeachtime());
+            hang.add(resultSet.getInt(1));
+            hang.add(resultSet.getString(2));
+            hang.add(resultSet.getInt(3));
+            hang.add(resultSet.getInt(4));
+            hang.add(resultSet.getString(5));
+            hang.add(resultSet.getInt(6));
+            rowData.add(hang);
         }
-        return null;
+        return  rowData;
     }
+
     /*选择课程*/
     public void addClasses(CourseResult courseResult) throws Exception {
         // 首先拿到数据库的连接
