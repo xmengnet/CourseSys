@@ -11,12 +11,15 @@ import db.*;
 import ArrayListData.*;
 
 public class StudentOper {
+    /*查看所有可选的课程*/
     public Courses display() throws Exception {
         ArrayList<Courses> list=new ArrayList<Courses>();
+        // 首先拿到数据库的连接
         DbCon dbCon=new DbCon();
         Statement statement=dbCon.getCon().createStatement();
         String query;
         query="select * from courses";
+        /*执行查询语句*/
         ResultSet resultSet=statement.executeQuery(query);
 
         System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
