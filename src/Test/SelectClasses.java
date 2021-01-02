@@ -42,6 +42,7 @@ public class SelectClasses extends JTable {
         jt = new JTable(studentOper.display(), columnNames);
         jt.setEnabled(false);
 
+
         //初始化 jsp滚动条
         jsp = new JScrollPane(jt);
         /*创建一个提示标签*/
@@ -59,32 +60,33 @@ public class SelectClasses extends JTable {
             public void actionPerformed(ActionEvent e) {
                 /*获取文本框内容*/
                 String text = cnameText.getText();
-                if(text.length()>5){
+                if(text.length()!=5){
                     /*弹出对话框说名课程号填写错误*/
+                    JOptionPane.showMessageDialog(null, "课程号输入错误");
+                }
+                /*课程号填写成功后进行的操作*/
+                else{
+                    CourseResult courseResult=new CourseResult();
+                    /*创建学生操作类对像*/
+                    StudentOper studentOper=new StudentOper();
 
-                }
-                CourseResult courseResult=new CourseResult();
-                /*创建学生操作类对像*/
-                StudentOper studentOper=new StudentOper();
-                /**/
-                var sname = new StudentOper();
-                var cname = new StudentOper();
-                int courseid = Integer.parseInt(text);
-                try {
-                    courseResult.setCname(cname.GetCnameBycourseid(courseid));
-                    courseResult.setSname(sname.GetSnameBySno(Integer.parseInt(sno)));
-                    courseResult.setSno(Integer.parseInt(sno));
-                    courseResult.setCourseid(courseid);
+                    var sname = new StudentOper();
+                    var cname = new StudentOper();
+                    int courseid = Integer.parseInt(text);
+                    try {
+                        courseResult.setCname(cname.GetCnameBycourseid(courseid));
+                        courseResult.setSname(sname.GetSnameBySno(Integer.parseInt(sno)));
+                        courseResult.setSno(Integer.parseInt(sno));
+                        courseResult.setCourseid(courseid);
 //                    /*把学号，姓名，课程号，课程名传入addClasses中*/
-//                    studentOper.addClasses(courseResult);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+                        studentOper.addClasses(courseResult);
+                        /*弹出消息框告知选课成功*/
+                        JOptionPane.showMessageDialog(null, "课程选择成功");
+                        /*监听选课成功确认按钮加监听*/
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
-                /*仅在调试时用*/
-//                System.out.println(sno);
-//                System.out.println(sname);
-//                System.out.println(courseid);
-//                System.out.println(cname);
             }
         });
 
@@ -102,12 +104,10 @@ public class SelectClasses extends JTable {
         /*把提示文本表格、水平盒子加入到垂直盒子中*/
         verticalBox.add(Box.createVerticalStrut(20));
         verticalBox.add(horizontalBox1);
-        verticalBox.add(Box.createVerticalStrut(10));
-        verticalBox.add(jt);
         verticalBox.add(Box.createVerticalStrut(20));
-//        verticalBox.add(jsp);
-
+       verticalBox.add(jsp);
         verticalBox.add(jPanel);
+        verticalBox.add(Box.createVerticalStrut(100));
         /*把水平盒子加入到jFrame中*/
         jFrame.add(verticalBox);
 
