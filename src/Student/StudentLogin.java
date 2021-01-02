@@ -70,7 +70,6 @@ public class StudentLogin extends JFrame {
 
                 ResultSet resultSet;
                 //        执行操作语句
-
                 resultSet = statement.executeQuery(sql);
 
                 if (!resultSet.next()) {
@@ -78,7 +77,7 @@ public class StudentLogin extends JFrame {
                 } else {
                     sql = "select spasswd from studentInfo where spasswd = " + "'" + passwd + "'";
 
-//                    try {
+
                     resultSet = statement.executeQuery(sql);
 
                     System.out.println(resultSet);

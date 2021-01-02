@@ -23,7 +23,7 @@ public class StudentOper {
         /*执行查询语句*/
         ResultSet resultSet=statement.executeQuery(query);
 
-        System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
+//        System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
         Vector rowData = new Vector();
         while(resultSet.next()){
             Vector hang = new Vector();
@@ -85,7 +85,7 @@ public class StudentOper {
 
     /*查看已选课程信息*/
     public CourseResult changeClasses(int sno) throws Exception {
-        ArrayList<CourseResult> list = new ArrayList<CourseResult>();
+        ArrayList<CourseResult> list = new ArrayList<>();
         // 首先拿到数据库的连接
         DbCon dbCon = new DbCon();
         Statement statement = dbCon.getCon().createStatement();
@@ -120,23 +120,24 @@ public class StudentOper {
         Courses courses=new Courses();
         String query;
          query =
-                "select * from courses where courseid = 'courseid'";
+                "select cname from courses where courseid = '"+courseid+"'";
         /*执行查询语句*/
         Statement statement=dbCon.getCon().createStatement();
         ResultSet resultSet=statement.executeQuery(query);
         while(resultSet.next()){
-            cname=resultSet.getString(2);
+            cname=resultSet.getString(1);
+            System.out.println(cname);
         }
         return cname;
     }
 
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();
-        //CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
+//        CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
+//        new GetCna
         //in.addClasses(co);
 //        in.delClasses(co);
         //System.out.println(in.changeClasses(1810361232));
         System.out.println(in.GetCnameBycourseid(10002));
     }
-
 }

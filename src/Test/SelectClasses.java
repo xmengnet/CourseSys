@@ -1,21 +1,26 @@
 package Test;
 
 import ArrayListData.Courses;
-import db.DbCon;
 import dbOperaction.StudentOper;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 import java.util.Vector;
 
 public class SelectClasses extends JTable {
     /*columnNames存放列名*/
-    static Vector  columnNames;
+    static Vector columnNames;
     static JTable jt = null;
     static JScrollPane jsp = null;
+    static String sno;
+
+    public SelectClasses(String snum) throws Exception {
+        sno = snum;
+        init();
+    }
+
     public void init() throws Exception {
         columnNames = new Vector();
         JFrame jFrame = new JFrame("选择课程");
@@ -28,7 +33,7 @@ public class SelectClasses extends JTable {
         columnNames.add("课时");
 
         /*创建学生操作类对像*/
-        StudentOper studentOper=new StudentOper();
+        StudentOper studentOper = new StudentOper();
         /*调用学生类里的方法*/
         studentOper.display();
 
@@ -39,23 +44,31 @@ public class SelectClasses extends JTable {
         //初始化 jsp滚动条
         jsp = new JScrollPane(jt);
         /*创建一个提示标签*/
-        JLabel titleLabel=new JLabel("请从下列课程中选择您感兴趣的课程");
+        JLabel titleLabel = new JLabel("请从下列课程中选择您感兴趣的课程");
         Box horizontalBox1 = Box.createHorizontalBox();
         horizontalBox1.add(titleLabel);
         /*课程号标签*/
-        JLabel cnamelabel=new JLabel("请输入课程号:");
-        JTextField cnameText=new JTextField(20);
+        JLabel cnamelabel = new JLabel("请输入课程号:");
+        JTextField cnameText = new JTextField(20);
         /*确认按钮*/
-        JButton confirm=new JButton("确认");
+        JButton confirm = new JButton("确认");
 
         confirm.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = cnameText.getText();
                 System.out.println(text);
-               int courseid=Integer.parseInt(text);
+                var name = new StudentOper();
+
+                int courseid = Integer.parseInt(text);
+                try {
+                    name.GetCnameBycourseid(courseid);
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 System.out.println(courseid);
-                Courses courses=new Courses();
+                Courses courses = new Courses();
 
             }
         });
@@ -63,7 +76,7 @@ public class SelectClasses extends JTable {
         /*创建一个水平盒子和垂直盒子*/
         Box horizontalBox = Box.createHorizontalBox();
         Box verticalBox = Box.createVerticalBox();
-        JPanel jPanel=new JPanel();
+        JPanel jPanel = new JPanel();
         jPanel.add(horizontalBox);
 
         /*把标签文本框加入到水平盒子中*/
@@ -91,9 +104,9 @@ public class SelectClasses extends JTable {
         jFrame.setVisible(true);
     }
 
-    public static void main(String[] args)  {
-          SelectClasses s=new SelectClasses();
+    public static void main(String[] args) {
         try {
+            SelectClasses s = new SelectClasses("1810361232");
             s.init();
         } catch (Exception e) {
             e.printStackTrace();
