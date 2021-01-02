@@ -147,22 +147,25 @@ public class StudentOper {
         return sname;
     }
 
-    public int dec(int courseid) throws Exception{
+    public void dec(String courseid) throws Exception{
         int surplus = 0;
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
         Courses courses=new Courses();
         String query;
         query =
-                "update courses set surplus=surplus-1 where courseid="+courseid+"'";
-        /*执行减一语句*/
+                "update courses set surplus=surplus-1 where courseid="+courseid;
+        /*执行减一语句ResultSet resultSet=*/
+
         Statement statement=dbCon.getCon().createStatement();
-        ResultSet resultSet=statement.executeQuery(query);
-        while(resultSet.next()){
-            surplus=resultSet.getInt(1);
-            System.out.println(surplus);
-        }
-        return  surplus;
+        statement.execute(query);
+        System.out.println();
+
+//        while(resultSet.next()){
+//            surplus=resultSet.getInt(1);
+//            System.out.println(surplus);
+//        }
+//        return  surplus;
     }
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
@@ -173,6 +176,7 @@ public class StudentOper {
 //        in.delClasses(co);
         //System.out.println(in.changeClasses(1810361232));
        // System.out.println(in.GetCnameBycourseid(10002));
-        System.out.println(in.dec(1005));
+        in.dec("10005");
+//        System.out.println();
     }
 }
