@@ -1,5 +1,6 @@
 package Test;
 
+import ArrayListData.CourseResult;
 import ArrayListData.Courses;
 import dbOperaction.StudentOper;
 
@@ -56,20 +57,34 @@ public class SelectClasses extends JTable {
         confirm.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*获取文本框内容*/
                 String text = cnameText.getText();
-                System.out.println(text);
-                var name = new StudentOper();
+                if(text.length()>5){
+                    /*弹出对话框说名课程号填写错误*/
 
+                }
+                CourseResult courseResult=new CourseResult();
+                /*创建学生操作类对像*/
+                StudentOper studentOper=new StudentOper();
+                /**/
+                var sname = new StudentOper();
+                var cname = new StudentOper();
                 int courseid = Integer.parseInt(text);
                 try {
-                    name.GetCnameBycourseid(courseid);
-
+                    courseResult.setCname(cname.GetCnameBycourseid(courseid));
+                    courseResult.setSname(sname.GetSnameBySno(Integer.parseInt(sno)));
+                    courseResult.setSno(Integer.parseInt(sno));
+                    courseResult.setCourseid(courseid);
+//                    /*把学号，姓名，课程号，课程名传入addClasses中*/
+//                    studentOper.addClasses(courseResult);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                System.out.println(courseid);
-                Courses courses = new Courses();
-
+                /*仅在调试时用*/
+//                System.out.println(sno);
+//                System.out.println(sname);
+//                System.out.println(courseid);
+//                System.out.println(cname);
             }
         });
 
@@ -103,7 +118,7 @@ public class SelectClasses extends JTable {
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
     }
-
+              /*以下仅在调试时使用*/
     public static void main(String[] args) {
         try {
             SelectClasses s = new SelectClasses("1810361232");

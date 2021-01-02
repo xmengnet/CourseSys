@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Vector;
 
 import db.*;
@@ -129,6 +128,24 @@ public class StudentOper {
             System.out.println(cname);
         }
         return cname;
+    }
+    /*根据学号查询姓名*/
+    public String GetSnameBySno(int sno) throws Exception{
+        String sname=null;
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        StudentInfo studentInfo=new StudentInfo();
+        String query;
+        query =
+                "select sname from studentInfo where sno = '"+sno+"'";
+        /*执行查询语句*/
+        Statement statement=dbCon.getCon().createStatement();
+        ResultSet resultSet=statement.executeQuery(query);
+        while(resultSet.next()){
+            sname=resultSet.getString(1);
+            System.out.println(sname);
+        }
+        return sname;
     }
 
     public static void main(String[] args) throws Exception {
