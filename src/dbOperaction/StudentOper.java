@@ -2,15 +2,20 @@ package dbOperaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import db.*;
 import ArrayListData.*;
 
 public class StudentOper {
-    public void addClasses(CourseResult courseResult) throws Exception{
+    public void addClasses(CourseResult courseResult) throws Exception {
         // 首先拿到数据库的连接
-        DbCon dbCon=new DbCon();
+        DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
-        String query="insert into courseresult"
+        String query = "insert into courseresult"
                 // 学号sno、姓名sname、课程号courseid、课程名cname
                 + "(sno, sname,courseid, cname)"
                 + "values(" + "?,?,?,?)";
@@ -27,51 +32,65 @@ public class StudentOper {
         psmt.setString(4, courseResult.getCname());
         //执行SQL语句
         psmt.execute();
-        System.out.println(query+"\t选课程成功");
+        System.out.println(query + "\t选课程成功");
     }
 
     /*删除已选课程信息信息*/
     public void delClasses(CourseResult courseResult) throws Exception {
         // 首先拿到数据库的连接
-        DbCon dbCon=new DbCon();
+        DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
-        String query=
-                "DELETE FROM courseresult "+
-                // 参数用?表示，相当于占位符
-                "WHERE  sno=? AND courseid = ?";
+        String query =
+                "DELETE FROM courseresult " +
+                        // 参数用?表示，相当于占位符
+                        "WHERE  sno=? AND courseid = ?";
         // 预编译sql语句
         PreparedStatement psmt = con.prepareStatement(query);
         // 先对应SQL语句，给SQL语句传递参数
-        psmt.setInt(1,courseResult.getSno());
-        psmt.setInt(2,courseResult.getCourseid());
+        psmt.setInt(1, courseResult.getSno());
+        psmt.setInt(2, courseResult.getCourseid());
         // 执行SQL语句
-        System.out.println(query+"\t删除成功");
+        System.out.println(query + "\t删除成功");
         psmt.execute();
 
     }
 
     /*查看已选课程信息*/
-    public void changeClasses(CourseResult courseResult) throws Exception{
+    public CourseResult changeClasses(int sno) throws Exception {
+        ArrayList<CourseResult> list = new ArrayList<CourseResult>();
         // 首先拿到数据库的连接
-        DbCon dbCon=new DbCon();
-        Connection con = dbCon.getCon();
-        String query="select * from courseresult where sno = ?";
-                // 参数用?表示，相当于占位符
-        // 预编译sql语句
-        PreparedStatement psmt = con.prepareStatement(query);
-        // 先对应SQL语句，给SQL语句传递参数
-        psmt.setInt(1, courseResult.getSno());
+        DbCon dbCon = new DbCon();
+        Statement statement = dbCon.getCon().createStatement();
+        String query = null;
+        Scanner sc = new Scanner(System.in);
+        sno = sc.nextInt();
+        query = "select * from courseresult where sno ='" + sno + "' ";
         // 执行SQL语句
-        psmt.execute();
-       // System.out.println();
+        ResultSet resultSet = statement.executeQuery(query);
+        System.out.println("学号   " + "姓名   " + "课程号   " + "课程名  ");
+        while (resultSet.next()) {
+
+            CourseResult courseResult1 = new CourseResult();
+            courseResult1.setSno(resultSet.getInt(1));
+            courseResult1.setSname(resultSet.getString(2));
+            courseResult1.setCourseid(resultSet.getInt(3));
+            courseResult1.setCname(resultSet.getString(4));
+            list.add(courseResult1);
+        }
+
+        for (CourseResult i : list) {
+            System.out.println(i.getSno() + " " + i.getSname() + i.getCourseid() + " " + i.getCname());
+        }
+        return null;
     }
+
 
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();
-        CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
+        //CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
         //in.addClasses(co);
 //        in.delClasses(co);
-       in.changeClasses(co);
+        System.out.println(in.changeClasses(1810361232));
     }
 
 }
