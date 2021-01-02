@@ -5,28 +5,52 @@ package Test;
  * 时间：2021年1月1日22时33分
  */
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ValidCode {
-    public static void main(String[] args) {
-        Random random = new Random();
-        String[] code = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F",
-                "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
+    final static String[] code = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+            "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F",
+            "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
+    static String verCode;
+
+    //方法判断输入值与实际值是否相等，返回true或false
+    public Boolean receive(String code) {
+        if (code.equals(verCode)) {
+            return true;
+        } else return false;
+    }
+
+    //    无用代码（与init()重复）
+//    public String refresh(){
+//        StringBuilder confirm = new StringBuilder();
+//        Random random = new Random();
+//        for (var i = 0; i < 4; i++) {
+//            int num = random.nextInt(36);
+////排序生成验证码
+//
+//            confirm.append(code[num]);
+//        }
+//        System.out.println(confirm);
+//        verCode=confirm.toString();
+//        return verCode;
+//    }
+//返回生成的验证码，区分大小写
+    public String init() {
         StringBuilder confirm = new StringBuilder();
+        Random random = new Random();
         for (var i = 0; i < 4; i++) {
             int num = random.nextInt(36);
-            System.out.println(num);
+//排序生成验证码
+
             confirm.append(code[num]);
         }
         System.out.println(confirm);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入验证码：");
-        String str = scanner.next();
-        if (str.equals(confirm.toString())) {
-            System.out.println("验证码正确！");
-        } else {
-            System.out.println("验证码输入错误！");
-        }
+        verCode = confirm.toString();
+        return verCode;
+    }
+
+    public static void main(String[] args) {
+        var code = new ValidCode();
+        code.init();
     }
 }
