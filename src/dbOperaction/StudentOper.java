@@ -79,7 +79,6 @@ public class StudentOper {
         // 执行SQL语句
         System.out.println(query + "\t删除成功");
         psmt.execute();
-
     }
 
     /*查看已选课程信息*/
@@ -89,14 +88,15 @@ public class StudentOper {
         DbCon dbCon = new DbCon();
         Statement statement = dbCon.getCon().createStatement();
         String query = null;
+        /*测试时用的*/
 //        Scanner sc = new Scanner(System.in);
 //        sno = sc.nextInt();
+
         query = "select * from courseresult where sno ='" + sno + "' ";
         // 执行SQL语句
         ResultSet resultSet = statement.executeQuery(query);
         System.out.println("学号   " + "姓名   " + "课程号   " + "课程名  ");
         while (resultSet.next()) {
-
             CourseResult courseResult1 = new CourseResult();
             courseResult1.setSno(resultSet.getInt(1));
             courseResult1.setSname(resultSet.getString(2));
@@ -104,7 +104,6 @@ public class StudentOper {
             courseResult1.setCname(resultSet.getString(4));
             list.add(courseResult1);
         }
-
         for (CourseResult i : list) {
             System.out.println(i.getSno() + " " + i.getSname() + i.getCourseid() + " " + i.getCname());
         }
@@ -148,6 +147,24 @@ public class StudentOper {
         return sname;
     }
 
+    public int dec(int courseid) throws Exception{
+        int surplus = 0;
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        Courses courses=new Courses();
+        String query;
+        query =
+                "update courses set surplus=surplus-1 where courseid="+courseid+"'";
+        /*执行减一语句*/
+        Statement statement=dbCon.getCon().createStatement();
+        ResultSet resultSet=statement.executeQuery(query);
+        while(resultSet.next()){
+            surplus=resultSet.getInt(1);
+            System.out.println(surplus);
+        }
+        return  surplus;
+    }
+    /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();
 //        CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
@@ -155,6 +172,7 @@ public class StudentOper {
         //in.addClasses(co);
 //        in.delClasses(co);
         //System.out.println(in.changeClasses(1810361232));
-        System.out.println(in.GetCnameBycourseid(10002));
+       // System.out.println(in.GetCnameBycourseid(10002));
+        System.out.println(in.dec(1005));
     }
 }

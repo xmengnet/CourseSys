@@ -42,7 +42,6 @@ public class SelectClasses extends JTable {
         jt = new JTable(studentOper.display(), columnNames);
         jt.setEnabled(false);
 
-
         //初始化 jsp滚动条
         jsp = new JScrollPane(jt);
         /*创建一个提示标签*/
@@ -78,11 +77,14 @@ public class SelectClasses extends JTable {
                         courseResult.setSname(sname.GetSnameBySno(Integer.parseInt(sno)));
                         courseResult.setSno(Integer.parseInt(sno));
                         courseResult.setCourseid(courseid);
-//                    /*把学号，姓名，课程号，课程名传入addClasses中*/
+                  /*把学号，姓名，课程号，课程名传入addClasses中*/
                         studentOper.addClasses(courseResult);
                         /*弹出消息框告知选课成功*/
                         JOptionPane.showMessageDialog(null, "课程选择成功");
                         /*监听选课成功确认按钮加监听*/
+
+
+
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
