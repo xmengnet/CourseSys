@@ -31,7 +31,7 @@ public class SelectClasses extends JTable {
         studentOper.display();
 
         jt = new JTable(studentOper.display(), columnNames);
-       jt.setEnabled(false);
+        jt.setEnabled(false);
         //初始化 jsp
         jsp = new JScrollPane(jt);
 
