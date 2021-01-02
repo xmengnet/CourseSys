@@ -64,40 +64,32 @@ public class adminLogin extends JFrame {
             String query = "select admin from manager where admin =" + "'" + name + "'";
             System.out.println(query);
             //    查询帐号信息
-            Statement statement = null;
+            Statement statement;
             try {
                 statement = dbCon.getCon().createStatement();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            ResultSet resultSet = null;
-            //        执行操作语句
-            try {
+
+                ResultSet resultSet;
+                //        执行操作语句
+
                 resultSet = statement.executeQuery(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
+
                 if (!resultSet.next()) {
-                    JOptionPane.showMessageDialog(null, "账号错误");
+                    JOptionPane.showMessageDialog(null, "账号或密码错误");
                 } else {
                     query = "select passwd from manager where passwd = " + "'" + passwd + "'";
 
-                    try {
-                        resultSet = statement.executeQuery(query);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    System.out.println(resultSet);
+                    resultSet = statement.executeQuery(query);
+
+                    System.out.println("执行代码:"+resultSet);
                     if (!resultSet.next()) {
-                        JOptionPane.showMessageDialog(null, "密码错误");
+                        JOptionPane.showMessageDialog(null, "账号或密码错误");
                     } else {
 //                        打开管理员主界面,并传递登陆用户名
                         new AdminMenu(name);
                         dispose();
                     }
                 }
-            } catch (SQLException throwables) {
+            } catch (Exception throwables) {
                 throwables.printStackTrace();
             }
         });
@@ -107,7 +99,6 @@ public class adminLogin extends JFrame {
         this.add(bt2);
         bt2.addActionListener(e -> {
             dispose();//关闭当前窗口
-            //System.exit(0);
         });
         this.setBackground(Color.blue);
         //设置单击关闭按钮时的默认操作
