@@ -3,8 +3,10 @@ package Student;
 import db.*;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.sql.*;
+import java.util.Enumeration;
 
 public class StudentLogin extends JFrame {
     //标签
@@ -21,7 +23,17 @@ public class StudentLogin extends JFrame {
     public StudentLogin() {
         this.init();
         this.addComponent();
-
+    }
+//统一设置字体及其大小
+    private static void InitGlobalFont(Font font) {
+        FontUIResource fontRes = new FontUIResource(font);
+        for (Enumeration<Object> keys = UIManager.getDefaults().keys(); keys.hasMoreElements();) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof FontUIResource) {
+                UIManager.put(key, fontRes);
+            }
+        }
     }
 
     public void init() {
@@ -32,6 +44,8 @@ public class StudentLogin extends JFrame {
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        InitGlobalFont(new Font("alias", Font.PLAIN, 14));  //统一设置字体
+
     }
 
     private void addComponent() {
