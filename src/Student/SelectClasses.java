@@ -4,16 +4,16 @@ import ArrayListData.CourseResult;
 import dbOperaction.StudentOper;
 
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 
 import java.util.Vector;
 
-public class SelectClasses extends JTable {
+public class SelectClasses {
     /*columnNames存放列名*/
     static Vector columnNames;
     static JTable jt = null;
     static JScrollPane jsp = null;
+    //    传递当前登陆学生学号
     static String sno;
 
     public SelectClasses(String snum) throws Exception {
@@ -23,7 +23,8 @@ public class SelectClasses extends JTable {
 
     public void init() throws Exception {
         columnNames = new Vector();
-        JFrame jFrame = new JFrame("选择课程");
+        JDialog jDialog = new JDialog();
+        jDialog.setTitle("学生选课");
         /*设置列名*/
         columnNames.add("课程号");
         columnNames.add("课程名");
@@ -58,15 +59,15 @@ public class SelectClasses extends JTable {
             public void actionPerformed(ActionEvent e) {
                 /*获取文本框内容*/
                 String text = cnameText.getText();
-                if(text.length()!=5){
+                if (text.length() != 5) {
                     /*弹出对话框说名课程号填写错误*/
                     JOptionPane.showMessageDialog(null, "课程号输入错误");
                 }
                 /*课程号填写成功后进行的操作*/
-                else{
-                    CourseResult courseResult=new CourseResult();
+                else {
+                    CourseResult courseResult = new CourseResult();
                     /*创建学生操作类对像*/
-                    StudentOper studentOper=new StudentOper();
+                    StudentOper studentOper = new StudentOper();
 
                     var sname = new StudentOper();
                     var cname = new StudentOper();
@@ -76,15 +77,17 @@ public class SelectClasses extends JTable {
                         courseResult.setSname(sname.GetSnameBySno(Integer.parseInt(sno)));
                         courseResult.setSno(Integer.parseInt(sno));
                         courseResult.setCourseid(courseid);
-                  /*把学号，姓名，课程号，课程名传入addClasses中*/
+                        /*把学号，姓名，课程号，课程名传入addClasses中*/
                         studentOper.addClasses(courseResult);
                         /*弹出消息框告知选课成功*/
-                        JOptionPane.showMessageDialog(null, "课程选择成功");
+                         JOptionPane.showMessageDialog(null, "课程选择成功");
                         /*监听选课成功确认按钮加监听*/
-
+                        StudentOper in=new StudentOper();
+                        in.dec(text);
 
 
                     } catch (Exception exception) {
+                        JOptionPane.showMessageDialog(null, "请勿重复选择一门课程！");
                         exception.printStackTrace();
                     }
                 }
@@ -106,26 +109,27 @@ public class SelectClasses extends JTable {
         verticalBox.add(Box.createVerticalStrut(20));
         verticalBox.add(horizontalBox1);
         verticalBox.add(Box.createVerticalStrut(20));
-       verticalBox.add(jsp);
+        verticalBox.add(jsp);
         verticalBox.add(jPanel);
         verticalBox.add(Box.createVerticalStrut(100));
-        /*把水平盒子加入到jFrame中*/
-        jFrame.add(verticalBox);
+        /*把水平盒子加入到jDialog中*/
+        jDialog.add(verticalBox);
 
-        /*设置jFrame的大小、位置可见性*/
-        jFrame.setSize(800, 550);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*设置jDialog的大小、位置可见性*/
+        jDialog.setSize(800, 550);
+        jDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         /*窗口在屏幕中间显示*/
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
+        jDialog.setLocationRelativeTo(null);
+        jDialog.setVisible(true);
     }
-              /*以下仅在调试时使用*/
-    public static void main(String[] args) {
-        try {
-            SelectClasses s = new SelectClasses("1810361232");
-            s.init();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+    /*以下仅在调试时使用*/
+//    public static void main(String[] args) {
+//        try {
+//            SelectClasses s = new SelectClasses("1810361232");
+//            s.init();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
