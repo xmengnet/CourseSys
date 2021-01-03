@@ -66,7 +66,6 @@ public class StudentOper {
     public int  delClasses(int sno,String courseid) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
-       // CourseResult courseResult=new CourseResult();
         String query;
         query =
                 "DELETE FROM courseresult  "+"where sno=? AND courseid=?";
@@ -179,6 +178,36 @@ public class StudentOper {
         Statement statement=dbCon.getCon().createStatement();
         statement.execute(query);
     }
+    /*修改学生密码*/
+    /*studentInfo*/
+    public int changeSpasswd(int sno,String spasswd) throws Exception{
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        String query;
+        query =
+                "update studentInfo set"+"where sno=? AND spasswd=?";
+        /*执行修改密码语句*/
+        Statement statement=dbCon.getCon().createStatement();
+        PreparedStatement pstm = con.prepareStatement(query);
+        pstm.setInt(1,sno);
+        pstm.setString(2,spasswd);
+        statement.execute(query);
+        int result = pstm.executeUpdate();
+        if(result>0){
+            System.out.println("删除成功");
+            return  1;
+        }
+        else{
+            System.out.println("删除失败");
+            return  0;
+        }
+    }
+
+
+
+
+
+
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();

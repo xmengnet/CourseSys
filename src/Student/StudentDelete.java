@@ -1,11 +1,10 @@
-package Test;
-import db.DbCon;
+package Student;
 import dbOperaction.StudentOper;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+
 public class StudentDelete extends JDialog implements ActionListener {
         JLabel Namelabel;
         JTextField idtext;
