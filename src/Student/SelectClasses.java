@@ -1,7 +1,6 @@
-package Test;
+package Student;
 
 import ArrayListData.CourseResult;
-import ArrayListData.Courses;
 import dbOperaction.StudentOper;
 
 import javax.swing.*;
