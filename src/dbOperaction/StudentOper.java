@@ -62,24 +62,29 @@ public class StudentOper {
         System.out.println(query + "\t选课程成功");
     }
 
-    /*删除已选课程信息信息*/
-    public void delClasses(CourseResult courseResult) throws Exception {
-        // 首先拿到数据库的连接
+    /*根据学号和课程号删除已选课程信息信息*/
+    public int  delClasses(int sno,String courseid) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
-        String query =
-                "DELETE FROM courseresult " +
-                        // 参数用?表示，相当于占位符
-                        "WHERE  sno=? AND courseid = ?";
-        // 预编译sql语句
-        PreparedStatement psmt = con.prepareStatement(query);
-        // 先对应SQL语句，给SQL语句传递参数
-        psmt.setInt(1, courseResult.getSno());
-        psmt.setInt(2, courseResult.getCourseid());
-        // 执行SQL语句
-        System.out.println(query + "\t删除成功");
-        psmt.execute();
+       // CourseResult courseResult=new CourseResult();
+        String query;
+        query =
+                "DELETE FROM courseresult  "+"where sno=? AND courseid=?";
+        /*执行删除课程语句语句*/
+        PreparedStatement pstm = con.prepareStatement(query);
+        pstm.setInt(1,sno);
+        pstm.setString(2,courseid);
+        int result = pstm.executeUpdate();
+        if(result>0){
+            System.out.println("删除成功");
+            return  1;
+        }
+        else{
+            System.out.println("删除失败");
+            return  0;
+        }
     }
+
 
     /*查看已选课程信息*/
     public CourseResult changeClasses(int sno) throws Exception {
@@ -146,8 +151,23 @@ public class StudentOper {
         }
         return sname;
     }
+    /*学生退选之后课程剩余可选人数加一*/
+    public void add(String courseid) throws Exception{
+        int surplus = 0;
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        Courses courses=new Courses();
+        String query;
+        query =
+                "update courses set surplus=surplus+1 where courseid="+courseid;
+        /*执行加一语句*/
+        Statement statement=dbCon.getCon().createStatement();
+        statement.execute(query);
+    }
 
-    public void dec(String courseid) throws Exception{
+
+      /*学生选课之后剩余人数减一*/
+      public void dec(String courseid) throws Exception{
         int surplus = 0;
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
@@ -155,17 +175,9 @@ public class StudentOper {
         String query;
         query =
                 "update courses set surplus=surplus-1 where courseid="+courseid;
-        /*执行减一语句ResultSet resultSet=*/
-
+        /*执行减一语句*/
         Statement statement=dbCon.getCon().createStatement();
         statement.execute(query);
-        System.out.println();
-
-//        while(resultSet.next()){
-//            surplus=resultSet.getInt(1);
-//            System.out.println(surplus);
-//        }
-//        return  surplus;
     }
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
@@ -176,7 +188,7 @@ public class StudentOper {
 //        in.delClasses(co);
         //System.out.println(in.changeClasses(1810361232));
        // System.out.println(in.GetCnameBycourseid(10002));
-        in.dec("10005");
-//        System.out.println();
+        //in.dec("10002");
+        // in.delClasses(1810361242,"10002");
     }
 }
