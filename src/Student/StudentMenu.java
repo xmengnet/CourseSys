@@ -1,7 +1,5 @@
 package Student;
 
-import Test.SelectClasses;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -80,15 +78,12 @@ public class StudentMenu extends JFrame implements ActionListener {
 
         if(bt.getText().equals("查询课程"))
         {
-//            panel=new FindCourse();
             try {
-                new Test.SelectClasses(userid);
+                new SelectClasses(userid);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             panel.setLocation(100, 20);
-            this.add(panel);
-            this.repaint();
         }
 
         else {
@@ -110,7 +105,7 @@ public class StudentMenu extends JFrame implements ActionListener {
                 else {
                     if(bt.getText().equals("修改课程"))
                     {
-//                        panel=new UpdateCourse();
+
                         panel.setLocation(100, 20);
 
                     }
