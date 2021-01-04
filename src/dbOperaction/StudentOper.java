@@ -80,7 +80,7 @@ public class StudentOper {
 
 
     /*查看已选课程信息*/
-    public CourseResult changeClasses(int sno) throws Exception {
+    public ArrayList  changeClasses(int sno) throws Exception {
         ArrayList<CourseResult> list = new ArrayList<>();
         // 首先拿到数据库的连接
         DbCon dbCon = new DbCon();
@@ -102,7 +102,7 @@ public class StudentOper {
         for (CourseResult i : list) {
             System.out.println(i.getSno() + " " + i.getSname() + i.getCourseid() + " " + i.getCname());
         }
-        return null;
+        return list;
     }
 
     /*根据课程号查询课程名*/
