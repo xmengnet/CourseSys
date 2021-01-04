@@ -58,37 +58,37 @@ public class SelectClasses {
         confirm.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog verCode = new JDialog();
-                verCode.setTitle("请输入验证码！");
-                verCode.setLayout(null);
+//                获取文本框内容
+                String text = cnameText.getText();
+                if (text.equals("")) {
+                    JOptionPane.showMessageDialog(null, "输入内容为空，请重新输入");
+                } else if (text.length() != 5) {
+                    /*弹出对话框说名课程号填写错误*/
+                    JOptionPane.showMessageDialog(null, "课程号输入错误");
+                } else {
+                    JDialog verCode = new JDialog();
+                    verCode.setTitle("请输入验证码！");
+                    verCode.setLayout(null);
 //                显示字体“验证码”
-                JLabel vCode = new JLabel("验证码：");
+                    JLabel vCode = new JLabel("验证码：");
 //                显示验证码的值
-                JLabel codeValue = new JLabel();
+                    JLabel codeValue = new JLabel();
 //                创建验证码对象
-                ValidCode validCode = new ValidCode();
-                String validCodeValue = validCode.init();
-                codeValue.setText(validCodeValue);
-                JTextField textValue = new JTextField();
+                    ValidCode validCode = new ValidCode();
+                    String validCodeValue = validCode.init();
+                    codeValue.setText(validCodeValue);
+                    JTextField textValue = new JTextField();
 //                刷新验证码
-                JButton refreshCode = new JButton("刷新验证码");
-                refreshCode.addActionListener(E -> {
-                    codeValue.setText(null);
-                    codeValue.setText(validCode.init());
-                });
+                    JButton refreshCode = new JButton("刷新验证码");
+                    refreshCode.addActionListener(E -> {
+                        codeValue.setText(null);
+                        codeValue.setText(validCode.init());
+                    });
+//                ValidCode validcode = new ValidCode();
+                    JButton confirm = new JButton("提交");
+                    confirm.addActionListener(ele -> {
+                        if (validCode.receive(textValue.getText())) {
 
-                ValidCode vcode = new ValidCode();
-                JButton confirm = new JButton("提交");
-                confirm.addActionListener(ele -> {
-                    if (validCode.receive(textValue.getText())) {
-                        /*获取文本框内容*/
-                        String text = cnameText.getText();
-                        if (text.length() != 5) {
-                            /*弹出对话框说名课程号填写错误*/
-                            JOptionPane.showMessageDialog(null, "课程号输入错误");
-                        }
-                        /*课程号填写成功后进行的操作*/
-                        else {
                             CourseResult courseResult = new CourseResult();
                             /*创建学生操作类对像*/
                             StudentOper studentOper = new StudentOper();
@@ -108,35 +108,37 @@ public class SelectClasses {
                                 /*监听选课成功确认按钮加监听*/
                                 StudentOper in = new StudentOper();
                                 in.dec(text);
+                                verCode.dispose();
                             } catch (Exception exception) {
                                 JOptionPane.showMessageDialog(null, "请勿重复选择一门课程！");
                                 exception.printStackTrace();
                             }
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "验证码输入错误，请重新输入！", "错误", 0);
-                    }
-                });
-//                设置布局
-                vCode.setLocation(10,10);
-                vCode.setSize(90,30);
-                codeValue.setLocation(90,10);
-                codeValue.setSize(100,30);
-                textValue.setLocation(180,10);
-                textValue.setSize(100,30);
-                refreshCode.setLocation(290,10);
-                refreshCode.setSize(100,30);
-                confirm.setLocation(400,10);
-                confirm.setSize(100,30);
-                verCode.add(vCode);
-                verCode.add(codeValue);
-                verCode.add(textValue);
-                verCode.add(refreshCode);
-                verCode.add(confirm);
-                verCode.setSize(510,100);
-                verCode.setLocationRelativeTo(null);
-                verCode.setVisible(true);
+//                        }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "验证码输入错误，请重新输入！", "错误", 0);
 
+                        }
+                    });
+                    //                设置布局
+                    vCode.setLocation(10, 10);
+                    vCode.setSize(70, 30);
+                    codeValue.setLocation(70, 10);
+                    codeValue.setSize(100, 30);
+                    textValue.setLocation(130, 10);
+                    textValue.setSize(100, 30);
+                    refreshCode.setLocation(250, 10);
+                    refreshCode.setSize(100, 30);
+                    confirm.setLocation(370, 10);
+                    confirm.setSize(100, 30);
+                    verCode.add(vCode);
+                    verCode.add(codeValue);
+                    verCode.add(textValue);
+                    verCode.add(refreshCode);
+                    verCode.add(confirm);
+                    verCode.setSize(510, 100);
+                    verCode.setLocationRelativeTo(null);
+                    verCode.setVisible(true);
+                }
             }
         });
 

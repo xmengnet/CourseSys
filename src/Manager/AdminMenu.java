@@ -16,9 +16,11 @@ public class AdminMenu extends JFrame implements ActionListener {
     JPanel panel2;
     JLabel label;
     public static String username;
+    public static String passwd;
 
-    AdminMenu(String name) {
+    AdminMenu(String name,String pwd) {
         username = name;
+        passwd=pwd;
         this.setSize(900, 700);
         this.setTitle("学生课程管理系统-管理员端");
         this.setLayout(null);
@@ -82,38 +84,41 @@ public class AdminMenu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton bt = (JButton) e.getSource();
-        //移除上一个面板
-//        if(bt!=null)
-//        {
-//            this.remove(panel2);
-//            this.remove(panel);
-//        }
+
         if (bt.getText().equals("查询课程")) {
-//            panel=new FindCourse();
+            try {
+                new CoursesInformation(username);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
         } else if (bt.getText().equals("添加课程")) {
-//                panel=new AddCourse();
+            new AdminAdd();
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
         } else if (bt.getText().equals("删除课程")) {
-//                    panel=new DeleteCourse();
+//            new DeleteCourse(username);
+            try {
+                new DeleteCourse();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
         } else if (bt.getText().equals("修改密码")) {
 //                        panel=new UpdateCourse();
-            new DeleteCourse(username);
+            new AChangePwd(username,passwd);
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
         }
     }
 
-
-    public static void main(String[] args) {
-        new AdminMenu("admin");
-    }
+//    public static void main(String[] args) {
+//        new AdminMenu("admin");
+//    }
 }

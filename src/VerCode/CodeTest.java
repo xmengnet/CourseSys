@@ -1,8 +1,7 @@
-package Test;
+package VerCode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class CodeTest {
     JFrame jFrame = new JFrame("验证码测试");

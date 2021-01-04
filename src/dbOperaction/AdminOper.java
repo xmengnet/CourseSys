@@ -13,7 +13,7 @@ import java.util.Vector;
 public class AdminOper {
     /*管理员查看所有的课程*/
     public Vector display() throws Exception {
-        ArrayList<Courses> list=new ArrayList<Courses>();
+        ArrayList<Courses> list=new ArrayList<>();
         // 首先拿到数据库的连接
         DbCon dbCon=new DbCon();
         Statement statement=dbCon.getCon().createStatement();
@@ -39,7 +39,7 @@ public class AdminOper {
     }
 
     /*管理员根据课程号删除课程*/
-    public Boolean Admindel(String name,String courseid) throws Exception{
+    public int Admindel(String courseid) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
         String query;
@@ -47,15 +47,16 @@ public class AdminOper {
                 "DELETE FROM courses where courseid="+courseid;
         /*执行删除课程语句语句*/
         Statement pstm = con.createStatement();
-        int result = pstm.executeUpdate(query);
-        if(result>0){
-            System.out.println("删除成功");
-            return  true;
-        }
-        else{
-            System.out.println("删除失败");
-            return  false;
-        }
+        return pstm.executeUpdate(query);
+//        int result = pstm.executeUpdate(query);
+//        if(result>0){
+//            System.out.println("删除成功");
+//            return  true;
+//        }
+//        else{
+//            System.out.println("删除失败");
+//            return  false;
+//        }
     }
 
     /*管理员添加课程*/
@@ -102,22 +103,16 @@ public class AdminOper {
         /*执行修改密码语句*/
         PreparedStatement pstm = con.prepareStatement(query);
         pstm.setString(1,passwd);
-        int result = pstm.executeUpdate();
-        if(result>0){
-            System.out.println("密码修改成功");
-            return  1;
-        }
-        else{
-            System.out.println("密码修改失败");
-            return  0;
-        }
+//        System.out.println("帐号："+admin+" 密码："+passwd);
+        return pstm.executeUpdate();
+
     }
-    /*以下紧测试时使用*/
-    public static void main(String[] args) throws Exception {
-        AdminOper in=new AdminOper();
-        //in.Adpasswd("admin","123456");
-        //in.Admindel("10005");
-        // Courses co=new Courses(10005,"马原",4,4,32,"传承");
-        //in.AdminAdd(co);
-    }
+    /*以下仅测试时使用*/
+//    public static void main(String[] args) throws Exception {
+//        AdminOper in=new AdminOper();
+//        //in.Adpasswd("admin","123456");
+//        //in.Admindel("10005");
+//        // Courses co=new Courses(10005,"马原",4,4,32,"传承");
+//        //in.AdminAdd(co);
+//    }
 }

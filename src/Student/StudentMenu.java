@@ -46,7 +46,6 @@ public class StudentMenu extends JFrame implements ActionListener {
         bt4.setLocation(550, 500);
         bt4.addActionListener(this);
         bt4.setActionCommand("个人信息");
-
         this.add(bt1);
         this.add(bt2);
         this.add(bt3);
@@ -57,7 +56,6 @@ public class StudentMenu extends JFrame implements ActionListener {
         panel.setLocation(100, 20);
         panel.setLayout(null);
         panel.setBackground(Color.LIGHT_GRAY);
-
 
         label = new JLabel();
 
@@ -77,7 +75,7 @@ public class StudentMenu extends JFrame implements ActionListener {
 
         if (bt.getText().equals("选课信息")) {
             try {
-
+                new StudentSelectInfo(userid);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -93,12 +91,16 @@ public class StudentMenu extends JFrame implements ActionListener {
 
         } else if (bt.getText().equals("退选课程")) {
 
-            new StudentDelete(userid);
+            try {
+                new StudentDelete(userid);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             panel.setLocation(100, 20);
 
         } else if (bt.getText().equals("个人信息")) {
             try {
-                new StudentInfo(userid);
+                new StudentInformation(userid);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -108,8 +110,7 @@ public class StudentMenu extends JFrame implements ActionListener {
         }
     }
 
-
-    public static void main(String[] args) {
-        new StudentMenu("admin");
-    }
+//    public static void main(String[] args) {
+//        new StudentMenu("1810361232");
+//    }
 }

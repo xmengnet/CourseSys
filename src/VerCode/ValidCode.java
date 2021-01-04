@@ -1,4 +1,4 @@
-package Test;
+package VerCode;
 /**
  * 简易生成验证码功能，从数字和字母中选取四个进行
  * 合并，与输入内容进行对比

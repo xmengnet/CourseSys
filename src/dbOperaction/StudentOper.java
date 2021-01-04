@@ -80,7 +80,7 @@ public class StudentOper {
 
 
     /*查看已选课程信息*/
-    public ArrayList  changeClasses(int sno) throws Exception {
+    public Vector  changeClasses(String sno) throws Exception {
         ArrayList<CourseResult> list = new ArrayList<>();
         // 首先拿到数据库的连接
         DbCon dbCon = new DbCon();
@@ -90,19 +90,20 @@ public class StudentOper {
         query = "select * from courseresult where sno ='" + sno + "' ";
         // 执行SQL语句
         ResultSet resultSet = statement.executeQuery(query);
-        System.out.println("学号   " + "姓名   " + "课程号   " + "课程名  ");
+        Vector rowData = new Vector();
         while (resultSet.next()) {
-            CourseResult courseResult1 = new CourseResult();
-            courseResult1.setSno(resultSet.getInt(1));
-            courseResult1.setSname(resultSet.getString(2));
-            courseResult1.setCourseid(resultSet.getInt(3));
-            courseResult1.setCname(resultSet.getString(4));
-            list.add(courseResult1);
+            Vector courseResult1 = new Vector();
+
+            courseResult1.add(resultSet.getInt(1));
+            courseResult1.add(resultSet.getString(2));
+            courseResult1.add(resultSet.getInt(3));
+            courseResult1.add(resultSet.getString(4));
+            rowData.add(courseResult1);
         }
         for (CourseResult i : list) {
             System.out.println(i.getSno() + " " + i.getSname() + i.getCourseid() + " " + i.getCname());
         }
-        return list;
+        return rowData;
     }
 
     /*根据课程号查询课程名*/

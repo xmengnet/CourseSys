@@ -26,19 +26,20 @@ public class adminLogin extends JFrame {
 //        设置窗口不可变，并设置居中
         this.init();
         this.addComponent();
-        this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     public void init() {
         this.setSize(500, 400);
-        this.setVisible(true);
         this.setTitle("管理员登录界面");
         this.setLayout(null);
         this.setLocation(700, 300);
         InitGlobalFont(new Font("alias", Font.PLAIN, 14));  //统一设置字体
-    }
+        this.setVisible(true);
 
+    }
+//  设置全局字体样式
     private static void InitGlobalFont(Font font) {
         FontUIResource fontRes = new FontUIResource(font);
         for (Enumeration<Object> keys = UIManager.getDefaults().keys(); keys.hasMoreElements();) {
@@ -74,8 +75,8 @@ public class adminLogin extends JFrame {
         this.add(lable3);
 
         lable4 = new JLabel("密    码：");
-        lable4.setSize(60, 60);
         lable4.setLocation(100, 133);
+        lable4.setSize(60, 60);
         this.add(lable4);
 
         text1 = new JTextField();
@@ -123,7 +124,7 @@ public class adminLogin extends JFrame {
                         JOptionPane.showMessageDialog(null, "账号或密码错误");
                     } else {
 //                        打开管理员主界面,并传递登陆用户名
-                        new AdminMenu(name);
+                        new AdminMenu(name,passwd);
                         dispose();
                     }
                 }
