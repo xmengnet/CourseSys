@@ -59,7 +59,7 @@ public class AdminOper {
     }
 
     /*管理员添加课程*/
-    public int AdminAdd(Courses courses) throws Exception {
+    public Boolean AdminAdd(Courses courses) throws Exception {
         // 首先拿到数据库的连接
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
@@ -80,16 +80,16 @@ public class AdminOper {
         psmt.setString(5,courses.getCteacher());
         psmt.setInt(6,courses.getTeachtime());
         //执行SQL语句
-        psmt.execute();
+        int result= psmt.executeUpdate();
         System.out.println(query + "\t添加课程成功");
-        if(psmt!=null)
+        if(result>0)
         {
             System.out.println("添加课程成功");
-            return 1;
+            return true;
         }
         else{
             System.out.println("添加课程失败");
-            return 0;
+            return false;
         }
     }
     /*修改管理员密码*/
