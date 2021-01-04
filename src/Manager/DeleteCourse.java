@@ -1,5 +1,7 @@
 package Manager;
 
+import dbOperaction.AdminOper;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -7,7 +9,9 @@ public  class DeleteCourse extends JDialog implements ActionListener{
 	   JLabel Namelabel;
 	   JTextField idtext;
 	   JButton Delbt;
-	   public DeleteCourse() {
+	   static  String name;
+	   public DeleteCourse(String admin) {
+	   	    name=admin;
 	   	this.setTitle("管理员删除课程");
 	   this.setSize(650,350);
 	   this.setLocation(100, 20);
@@ -34,8 +38,8 @@ public  class DeleteCourse extends JDialog implements ActionListener{
 				String delid = idtext.getText();
 				AdminOper adminOper=new AdminOper();
 				try {
-					int result=adminOper.Admindel(delid);
-					if(result>0){
+					Boolean result=adminOper.Admindel(name,delid);
+					if(result){
 						JOptionPane.showMessageDialog(null, "课程删除成功");
 					}
 					else{
@@ -46,8 +50,8 @@ public  class DeleteCourse extends JDialog implements ActionListener{
 				}
 
 			}
-
-	public static void main(String[] args) {
-		DeleteCourse a=new DeleteCourse();
-	}
+//    测试使用
+//	public static void main(String[] args) {
+//		DeleteCourse a=new DeleteCourse("admin");
+//	}
 }
