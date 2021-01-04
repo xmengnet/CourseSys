@@ -177,7 +177,7 @@ public class StudentOper {
 
     /*修改学生密码*/
     /*studentInfo int sno,学号String spasswd 密码*/
-    public int changeSpasswd(int sno,String spasswd) throws Exception{
+    public int changeSpasswd(String sno,String spasswd) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
         String query;
@@ -198,35 +198,25 @@ public class StudentOper {
     }
 
     /*查看学生个人信息*/
-    public Vector DisStuInfo(String sno) throws Exception {
-        ArrayList<StudentInfo> list=new ArrayList<StudentInfo>();
+    public StudentInfo DisStuInfo(String sno) throws Exception {
         // 首先拿到数据库的连接
-        DbCon dbCon=new DbCon();
-        Statement statement=dbCon.getCon().createStatement();
+        DbCon dbCon = new DbCon();
+        Statement statement = dbCon.getCon().createStatement();
         String query;
-        query="select * from studentInfo where sno="+sno;
+        query = "select * from studentInfo where sno= "+sno;
         /*执行查询语句*/
-        ResultSet resultSet=statement.executeQuery(query);
+        StudentInfo studentInfo = new StudentInfo();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
 
-        Vector rowData = new Vector();
-        while(resultSet.next()){
-            Vector hang = new Vector();
-
-            hang.add(resultSet.getString(1));
-            hang.add(resultSet.getString(2));
-            hang.add(resultSet.getString(3));
-            hang.add(resultSet.getString(4));
-            hang.add(resultSet.getString(5));
-            hang.add(resultSet.getString(6));
-            rowData.add(hang);
+            studentInfo.setSno(resultSet.getInt(1));
+            studentInfo.setSpasswd(resultSet.getString(2));
+            studentInfo.setSname(resultSet.getString(3));
+            studentInfo.setClasses(resultSet.getString(4));
+            studentInfo.setId(resultSet.getString(5));
+            studentInfo.setEnrollment(resultSet.getString(6));
         }
-        if(rowData!=null){
-            System.out.println("查询成功");
-        }
-        else{
-            System.out.println("查询失败");
-        }
-        return  rowData;
+        return studentInfo;
     }
 
     /*以下紧测试时使用*/

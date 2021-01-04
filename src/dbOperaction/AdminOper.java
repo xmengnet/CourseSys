@@ -39,23 +39,22 @@ public class AdminOper {
     }
 
     /*管理员根据课程号删除课程*/
-    public int  Admindel(String courseid) throws Exception{
+    public Boolean Admindel(String name,String courseid) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
         String query;
         query =
-                "DELETE FROM courseresult where courseid="+courseid;
+                "DELETE FROM courses where courseid="+courseid;
         /*执行删除课程语句语句*/
-        PreparedStatement pstm = con.prepareStatement(query);
-        pstm.setString(1,courseid);
-        int result = pstm.executeUpdate();
+        Statement pstm = con.createStatement();
+        int result = pstm.executeUpdate(query);
         if(result>0){
             System.out.println("删除成功");
-            return  1;
+            return  true;
         }
         else{
             System.out.println("删除失败");
-            return  0;
+            return  false;
         }
     }
 
@@ -116,6 +115,9 @@ public class AdminOper {
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
         AdminOper in=new AdminOper();
-        in.Adpasswd("admin","123456");
+        //in.Adpasswd("admin","123456");
+        //in.Admindel("10005");
+        // Courses co=new Courses(10005,"马原",4,4,32,"传承");
+        //in.AdminAdd(co);
     }
 }

@@ -43,11 +43,11 @@ public class AdminMenu extends JFrame implements ActionListener {
         bt3.addActionListener(this);
         bt3.setActionCommand("添加课程");
 
-        bt4 = new JButton("修改课程");
+        bt4 = new JButton("修改密码");
         bt4.setSize(150, 50);
         bt4.setLocation(550, 500);
         bt4.addActionListener(this);
-        bt4.setActionCommand("修改课程");
+        bt4.setActionCommand("修改密码");
 
         this.add(bt1);
         this.add(bt2);
@@ -103,8 +103,9 @@ public class AdminMenu extends JFrame implements ActionListener {
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
-        } else if (bt.getText().equals("修改课程")) {
+        } else if (bt.getText().equals("修改密码")) {
 //                        panel=new UpdateCourse();
+            new DeleteCourse(username);
             panel.setLocation(100, 20);
             this.add(panel);
             this.repaint();
