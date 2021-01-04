@@ -20,7 +20,7 @@ public class DeleteCourse {
     public void init() throws Exception {
         columnNames = new Vector();
         JDialog jDialog = new JDialog();
-        jDialog.setTitle("学生选课");
+        jDialog.setTitle("删除课程");
         /*设置列名*/
         columnNames.add("课程号");
         columnNames.add("课程名");
