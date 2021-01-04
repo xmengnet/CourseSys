@@ -97,7 +97,11 @@ public class StudentMenu extends JFrame implements ActionListener {
             panel.setLocation(100, 20);
 
         } else if (bt.getText().equals("个人信息")) {
-
+            try {
+                new StudentInfo(userid);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             panel.setLocation(100, 20);
 
 
