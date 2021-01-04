@@ -1,8 +1,6 @@
-package Manager;
+package dbOperaction;
 
-import ArrayListData.CourseResult;
 import ArrayListData.Courses;
-import ArrayListData.StudentInfo;
 import db.DbCon;
 
 import java.sql.Connection;
@@ -95,9 +93,29 @@ public class AdminOper {
             return 0;
         }
     }
-
+    /*修改管理员密码*/
+    public int Adpasswd(String admin,String passwd) throws Exception{
+        DbCon dbCon = new DbCon();
+        Connection con = dbCon.getCon();
+        String query;
+        query =
+                "UPDATE manager set passwd= ? WHERE admin= "+admin;
+        /*执行修改密码语句*/
+        PreparedStatement pstm = con.prepareStatement(query);
+        pstm.setString(1,passwd);
+        int result = pstm.executeUpdate();
+        if(result>0){
+            System.out.println("密码修改成功");
+            return  1;
+        }
+        else{
+            System.out.println("密码修改失败");
+            return  0;
+        }
+    }
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
         AdminOper in=new AdminOper();
+        in.Adpasswd("admin","123456");
     }
 }

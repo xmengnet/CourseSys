@@ -1,12 +1,7 @@
 package dbOperaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Vector;
-
+import java.sql.*;
+import java.util.*;
 import db.*;
 import ArrayListData.*;
 
@@ -22,7 +17,6 @@ public class StudentOper {
         /*执行查询语句*/
         ResultSet resultSet=statement.executeQuery(query);
 
-//        System.out.println("课程号   "+"课程名  "+"限报人数   "+"剩余人数   "+"教授教师   "+"课时  ");
         Vector rowData = new Vector();
         while(resultSet.next()){
             Vector hang = new Vector();
@@ -93,9 +87,6 @@ public class StudentOper {
         Statement statement = dbCon.getCon().createStatement();
         String query = null;
         /*测试时用的*/
-//        Scanner sc = new Scanner(System.in);
-//        sno = sc.nextInt();
-
         query = "select * from courseresult where sno ='" + sno + "' ";
         // 执行SQL语句
         ResultSet resultSet = statement.executeQuery(query);
@@ -121,7 +112,7 @@ public class StudentOper {
         Connection con = dbCon.getCon();
         Courses courses=new Courses();
         String query;
-         query =
+        query =
                 "select cname from courses where courseid = '"+courseid+"'";
         /*执行查询语句*/
         Statement statement=dbCon.getCon().createStatement();
@@ -132,6 +123,8 @@ public class StudentOper {
         }
         return cname;
     }
+
+
     /*根据学号查询姓名*/
     public String GetSnameBySno(int sno) throws Exception{
         String sname=null;
@@ -150,6 +143,8 @@ public class StudentOper {
         }
         return sname;
     }
+
+
     /*学生退选之后课程剩余可选人数加一*/
     public void add(String courseid) throws Exception{
         int surplus = 0;
@@ -165,8 +160,8 @@ public class StudentOper {
     }
 
 
-      /*学生选课之后剩余人数减一*/
-      public void dec(String courseid) throws Exception{
+    /*学生选课之后剩余人数减一*/
+    public void dec(String courseid) throws Exception{
         int surplus = 0;
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
@@ -178,46 +173,66 @@ public class StudentOper {
         Statement statement=dbCon.getCon().createStatement();
         statement.execute(query);
     }
+
+
     /*修改学生密码*/
-    /*studentInfo*/
+    /*studentInfo int sno,学号String spasswd 密码*/
     public int changeSpasswd(int sno,String spasswd) throws Exception{
         DbCon dbCon = new DbCon();
         Connection con = dbCon.getCon();
         String query;
         query =
-                "update studentInfo set"+"where sno=? AND spasswd=?";
+                "update studentInfo set spasswd=? where sno="+sno;
         /*执行修改密码语句*/
-        Statement statement=dbCon.getCon().createStatement();
         PreparedStatement pstm = con.prepareStatement(query);
-        pstm.setInt(1,sno);
-        pstm.setString(2,spasswd);
-        statement.execute(query);
+        pstm.setString(1,spasswd);
         int result = pstm.executeUpdate();
         if(result>0){
-            System.out.println("删除成功");
+            System.out.println("修改成功");
             return  1;
         }
         else{
-            System.out.println("删除失败");
+            System.out.println("修改失败");
             return  0;
         }
     }
 
+    /*查看学生个人信息*/
+    public Vector DisStuInfo(String sno) throws Exception {
+        ArrayList<StudentInfo> list=new ArrayList<StudentInfo>();
+        // 首先拿到数据库的连接
+        DbCon dbCon=new DbCon();
+        Statement statement=dbCon.getCon().createStatement();
+        String query;
+        query="select * from studentInfo where sno="+sno;
+        /*执行查询语句*/
+        ResultSet resultSet=statement.executeQuery(query);
 
+        Vector rowData = new Vector();
+        while(resultSet.next()){
+            Vector hang = new Vector();
 
-
-
+            hang.add(resultSet.getString(1));
+            hang.add(resultSet.getString(2));
+            hang.add(resultSet.getString(3));
+            hang.add(resultSet.getString(4));
+            hang.add(resultSet.getString(5));
+            hang.add(resultSet.getString(6));
+            rowData.add(hang);
+        }
+        if(rowData!=null){
+            System.out.println("查询成功");
+        }
+        else{
+            System.out.println("查询失败");
+        }
+        return  rowData;
+    }
 
     /*以下紧测试时使用*/
     public static void main(String[] args) throws Exception {
         StudentOper in=new StudentOper();
-//        CourseResult co=new CourseResult(1810361232,"董新生",10001,"戴冬");
-//        new GetCna
-        //in.addClasses(co);
-//        in.delClasses(co);
-        //System.out.println(in.changeClasses(1810361232));
-       // System.out.println(in.GetCnameBycourseid(10002));
-        //in.dec("10002");
-        // in.delClasses(1810361242,"10002");
+        //in.changeSpasswd(1810361232,"123456");
+        //in.DisStuInfo("1810361232");
     }
 }
